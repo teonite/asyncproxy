@@ -8,11 +8,6 @@ dependencies:
     - docker build -t "teonite/asyncproxy:$CIRCLE_BUILD_NUM" .
     - docker tag "teonite/asyncproxy:$CIRCLE_BUILD_NUM" "teonite/asyncproxy:latest"
 
-test:
-  override:
-    - docker run -d -p 8000:8000 teonite/asyncproxy; sleep 10
-    - curl --retry 10 --retry-delay 5 -v http://localhost
-
 deployment:
   hub:
     branch: master
