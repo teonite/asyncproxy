@@ -10,17 +10,18 @@ from tornado.ioloop import IOLoop
 import tornado.web
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-client = AsyncHTTPClient()
-
-
 class HttpProxyHandler(RequestHandler):
+    def __init__(self, application, request, **kwargs):
+        super().__init__(application, request, **kwargs)
+        self.client = AsyncHTTPClient()
+
     @gen.coroutine
     def get(self):
-        logger.info("Processing url %s", self.request.uri)
+        logger.info("New request from %s - url %s", self.request.remote_ip, self.request.uri)
 
         range_param = self.get_argument("range", None)
         range_header = self.request.headers.get("Range", None)
@@ -39,7 +40,7 @@ class HttpProxyHandler(RequestHandler):
 
             request = HTTPRequest(url=self.request.uri, headers=headers)
 
-            response = yield gen.Task(client.fetch, request)
+            response = yield gen.Task(self.client.fetch, request)
 
             logger.info("Target response status %s", response.code)
 
@@ -93,9 +94,9 @@ if __name__ == "__main__":
     port = os.getenv("ASYNC_PROXY_PORT", 8000)
     address = os.getenv("ASYNC_PROXY_ADDRESS", "0.0.0.0")
 
-    logger.info("Proxy listening on %s:%s", address, port)
-
     app = AsyncProxy()
     app.listen(port, address=address)
+
+    logger.info("Proxy listening on %s:%s", address, port)
 
     IOLoop.instance().start()
