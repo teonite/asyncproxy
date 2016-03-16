@@ -5,27 +5,16 @@ Async HTTP proxy
 
 Simple asynchronous HTTP proxy with range query parameter support.
 
-### Installation
-Install package requirements using pip:
+## Running using Docker
 
 ```
-pip install -r requirements.txt
+docker-compose pull
+docker-compose up -d
 ```
 
-### Run proxy
-To start the proxy locally on default 8000 port run the following command: 
+To run the proxy on different port or address edit the environment section in docker-compose.yml.
 
-```
-python asyncproxy/asyncproxy.py
-```
-    
-### Run tests
-To run tests execute the following command (libcurl required, minimum version 7.21.1):
-
-```
-python -m tornado.testing asyncproxy/tests.py
-```
-    
+## Usage
 ### Basic usage
 
 ```
@@ -39,15 +28,30 @@ curl -x http://<proxy_host>:<proxy_port> http://cdn3.sbnation.com/assets/3786371
 ```  
   
 ### Statistics
-Basic proxy statistics in form of a JSON document can be found at:
+Statistics are presented as an HTML view. The view can be found at: 
 
 ```
 http://<proxy_host>:<proxy_port>/stats
 ```
 
-### Fancy statistics
-Statistics can be also presented on a HTML page. The view can be found at: 
+## Local development
+### Install python requirements
+Install package requirements using pip:
 
 ```
-http://<proxy_host>:<proxy_port>/fancystats
+pip install -r requirements.txt
+```
+
+### Run locally
+To start the proxy locally on default 8000 port run the following command: 
+
+```
+python asyncproxy/asyncproxy.py
+```
+    
+### Run tests
+To run tests execute the following command (libcurl required, minimum version 7.21.1):
+
+```
+python -m tornado.testing asyncproxy/tests.py
 ```
