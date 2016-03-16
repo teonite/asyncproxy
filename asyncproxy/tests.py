@@ -58,20 +58,8 @@ class AsyncProxyTestCase(AsyncHTTPTestCase):
 
     def test_stats_uptime(self):
         time.sleep(1)
-
-        response = self.fetch("/stats")
-
-        self.assertEqual(response.code, 200)
-
-        stats = json.loads(response.body.decode("utf-8"))
-        self.assertGreater(stats["uptime_seconds"], 0)
+        self.assertGreater(self._app.uptime_seconds, 0)
 
     def test_stats_bytes_tranfered(self):
         self.test_proxy_with_range_header()
-
-        response = self.fetch("/stats")
-
-        self.assertEqual(response.code, 200)
-
-        stats = json.loads(response.body.decode("utf-8"))
-        self.assertEqual(stats["bytes_transferred"], 100)
+        self.assertEqual(self._app.bytes_transferred, 100)

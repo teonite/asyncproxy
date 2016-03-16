@@ -59,19 +59,9 @@ class HttpProxyHandler(RequestHandler):
 class StatsHandler(RequestHandler):
     @gen.coroutine
     def get(self):
-        self.write({
-            "bytes_transferred": self.application.bytes_transferred,
-            "uptime_seconds": (datetime.datetime.now() - self.application.start_time).seconds,
-        })
-        self.finish()
-
-
-class FancyStatsHandler(RequestHandler):
-    @gen.coroutine
-    def get(self):
         self.render(
             "templates/stats.html",
-            uptime_seconds=(datetime.datetime.now() - self.application.start_time).seconds,
+            uptime_seconds=self.application.uptime_seconds,
             bytes_transferred=self.application.bytes_transferred
         )
 
@@ -84,7 +74,6 @@ class AsyncProxy(tornado.web.Application):
 
         handlers = [
             (r"/stats", StatsHandler),
-            (r"/fancystats", FancyStatsHandler),
             (r"/static/.*", tornado.web.StaticFileHandler, dict(path=settings['static_path'])),
             (r".*", HttpProxyHandler),
         ]
@@ -94,10 +83,16 @@ class AsyncProxy(tornado.web.Application):
 
         super().__init__(handlers, **settings)
 
+    @property
+    def uptime_seconds(self):
+        return (datetime.datetime.now() - self.start_time).seconds
+
 
 if __name__ == "__main__":
     port = os.getenv("ASYNC_PROXY_PORT", 8000)
     address = os.getenv("ASYNC_PROXY_ADDRESS", "0.0.0.0")
+
+    logger.info("Proxy listening on %s:%s", address, port)
 
     app = AsyncProxy()
     app.listen(port, address=address)
