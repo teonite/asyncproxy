@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>ASYNC Proxy</title>
+
+        <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet" type='text/css'>
+        <link href="{{ static_url('css/style.css') }}" rel="stylesheet" type='text/css'>
+        <link href="{{ static_url('css/font-awesome.min.css') }}" rel="stylesheet" type='text/css'>
+
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    </head>
+
+    <body>
+
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="numbers-wrapper">
+                <i class="fa fa-exchange"></i>
+                <h1>
+                    ASYNC Proxy
+                </h1>
+
+                <div class="number-wrapper">
+                    <div class="number small">
+                        <h2>Uptime</h2>
+                        <div class="circle green">
+                            <p>
+                                {{ uptime_seconds }}
+                                <span>seconds</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="number big">
+                        <h2>Transfered</h2>
+                        <div class="circle blue">
+                            <p>
+                                {{ bytes_transferred }}
+                                <span>bytes</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <a href="http://www.teonite.com" target="_blank" class="tnt">TEONITE</a>
+            </div>
+        </div>
+    </div>
+
+    </body>
+</html>
