@@ -1,5 +1,5 @@
 proxy:
-  build: .
+  image: teonite/asyncproxy
   environment:
     ASYNC_PROXY_PORT: 8000
     ASYNC_PROXY_ADDRESS: 0.0.0.0
