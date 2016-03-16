@@ -55,3 +55,9 @@ To run tests execute the following command (libcurl required, minimum version 7.
 ```
 python -m tornado.testing asyncproxy/tests.py
 ```
+
+### Generate coverage report
+
+```
+coverage run -m tornado.testing asyncproxy/tests.py
+```
