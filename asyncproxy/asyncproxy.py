@@ -97,6 +97,7 @@ if __name__ == "__main__":
     app = AsyncProxy()
     app.listen(port, address=address)
 
+    logger.info("Copyright (C) TEONITE - http://teonite.com")
     logger.info("Proxy listening on %s:%s", address, port)
 
     IOLoop.instance().start()
