@@ -1,3 +1,4 @@
+# Copyright (C) TEONITE - http://teonite.com
 import logging
 import os
 

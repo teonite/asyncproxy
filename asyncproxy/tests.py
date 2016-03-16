@@ -1,5 +1,4 @@
-import json
-
+# Copyright (C) TEONITE - http://teonite.com
 import time
 
 from tornado.curl_httpclient import CurlAsyncHTTPClient
