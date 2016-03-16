@@ -9,6 +9,8 @@ dependencies:
     - docker tag "teonite/asyncproxy:$CIRCLE_BUILD_NUM" "teonite/asyncproxy:latest"
 
 test:
+    override:
+        - python -m tornado.testing asyncproxy/tests.py
     post:
         - pip install codecov && codecov
 
