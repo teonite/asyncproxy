@@ -28,7 +28,7 @@ class AsyncProxyTestCase(AsyncHTTPTestCase):
     def test_proxy_without_range(self):
         response = yield self.http_client.fetch(self.url, proxy_host="localhost", proxy_port=self.get_http_port())
         self.assertEqual(response.code, 200)
-        self.assertEqual(int(response.headers["Content-Length"]), 84378)
+        self.assertEqual(len(response.body), 84378)
 
     @gen_test
     def test_proxy_with_range_header(self):
@@ -38,14 +38,14 @@ class AsyncProxyTestCase(AsyncHTTPTestCase):
         response = yield self.http_client.fetch(self.url, headers=headers, proxy_host="localhost",
                                                 proxy_port=self.get_http_port())
         self.assertEqual(response.code, 200)
-        self.assertEqual(int(response.headers["Content-Length"]), 100)
+        self.assertEqual(len(response.body), 100)
 
     @gen_test
     def test_proxy_with_range_param(self):
         response = yield self.http_client.fetch("%s?range=bytes=0-99" % self.url, proxy_host="localhost",
                                                 proxy_port=self.get_http_port())
         self.assertEqual(response.code, 200)
-        self.assertEqual(int(response.headers["Content-Length"]), 100)
+        self.assertEqual(len(response.body), 100)
 
     @gen_test
     def test_proxy_range_conflict(self):

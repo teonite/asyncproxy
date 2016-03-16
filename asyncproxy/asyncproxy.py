@@ -38,7 +38,7 @@ class HttpProxyHandler(RequestHandler):
 
             logger.debug("Setting target request headers %s", list(headers.get_all()))
 
-            request = HTTPRequest(url=self.request.uri, headers=headers)
+            request = HTTPRequest(url=self.request.uri, headers=headers, streaming_callback=self._streaming_callback)
 
             response = yield gen.Task(self.client.fetch, request)
 
@@ -48,14 +48,14 @@ class HttpProxyHandler(RequestHandler):
                 logger.debug("Adding response header %s=%s", header_name, header_value)
                 self.add_header(header_name, header_value)
 
-            if response.body:
-                content_length = len(response.body)
-                self.set_header("Content-Length", content_length)
-                self.write(response.body)
-
-                self.application.bytes_transferred += content_length
-
             self.finish()
+
+    def _streaming_callback(self, chunk):
+        chunk_length = len(chunk)
+        logger.debug("Writing chunk of %s bytes", chunk_length)
+        self.write(chunk)
+        self.flush()
+        self.application.bytes_transferred += chunk_length
 
 
 class StatsHandler(RequestHandler):
