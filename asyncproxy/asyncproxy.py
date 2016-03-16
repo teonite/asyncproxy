@@ -9,8 +9,8 @@ from tornado.ioloop import IOLoop
 import tornado.web
 
 
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 
 client = AsyncHTTPClient()
