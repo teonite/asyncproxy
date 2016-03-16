@@ -16,7 +16,7 @@ test:
   override:
     - python -m tornado.testing asyncproxy/tests.py
   post:
-    - pip install codecov && codecov
+    - coverage run -m tornado.testing asyncproxy/tests.py && codecov
 
 deployment:
   hub:
