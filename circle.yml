@@ -8,6 +8,10 @@ dependencies:
     - docker build -t "teonite/asyncproxy:$CIRCLE_BUILD_NUM" .
     - docker tag "teonite/asyncproxy:$CIRCLE_BUILD_NUM" "teonite/asyncproxy:latest"
 
+test:
+    post:
+        - pip install codecov && codecov
+
 deployment:
   hub:
     branch: master
