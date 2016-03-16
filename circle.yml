@@ -9,6 +9,8 @@ dependencies:
     - docker tag "teonite/asyncproxy:$CIRCLE_BUILD_NUM" "teonite/asyncproxy:latest"
 
 test:
+    pre:
+        - pip install -r requirements.txt
     override:
         - python -m tornado.testing asyncproxy/tests.py
     post:
